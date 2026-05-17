@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import type { ReactNode } from 'react';
 import { useAuthStore } from '../store/useAuthStore';
 import { useThemeStore } from '../store/useThemeStore';
@@ -97,7 +97,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
               {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </button>
             <div className="flex items-center space-x-3 relative">
-              <button 
+              <button
                 onClick={() => setProfileOpen(true)}
                 className="flex items-center space-x-2 p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
               >
@@ -109,7 +109,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                   <span className="text-xs text-gray-500 dark:text-gray-400">{user?.role}</span>
                 </div>
               </button>
-              
+
               <button
                 onClick={handleLogout}
                 className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50 focus:outline-none transition-colors"
@@ -130,51 +130,51 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-0 bg-gray-900/75 overflow-y-auto">
           <div className="relative bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-sm p-6 border border-gray-200 dark:border-gray-700">
             <div className="flex items-center justify-between mb-5">
-                <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-white flex items-center">
-                  <UserIcon className="w-5 h-5 mr-2 text-blue-500" />
-                  Your Profile
-                </h3>
-                <button onClick={() => setProfileOpen(false)} className="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 focus:outline-none">
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
-              
-              <div className="mt-2 text-center flex flex-col items-center">
-                <div className="w-20 h-20 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center text-blue-600 dark:text-blue-400 text-3xl font-bold mb-4 shadow-inner">
-                  {user?.name?.charAt(0).toUpperCase()}
-                </div>
-                <h4 className="text-xl font-bold text-gray-900 dark:text-white">{user?.name}</h4>
-                <p className="text-sm font-medium text-blue-600 dark:text-blue-400 mt-1 px-3 py-1 bg-blue-50 dark:bg-blue-900/30 rounded-full">{user?.role}</p>
-              </div>
+              <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-white flex items-center">
+                <UserIcon className="w-5 h-5 mr-2 text-blue-500" />
+                Your Profile
+              </h3>
+              <button onClick={() => setProfileOpen(false)} className="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 focus:outline-none">
+                <X className="w-6 h-6" />
+              </button>
+            </div>
 
-              <div className="mt-6 border-t border-gray-200 dark:border-gray-700 pt-4 space-y-4">
-                <div>
-                  <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Email Address</label>
-                  <div className="mt-1 text-sm text-gray-900 dark:text-white font-medium">{user?.email}</div>
-                </div>
-                <div>
-                  <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Account Created</label>
-                  <div className="mt-1 text-sm text-gray-900 dark:text-white font-medium">
-                    {user?.createdAt ? new Date(user.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }) : 'N/A'}
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Account ID</label>
-                  <div className="mt-1 text-sm text-gray-500 dark:text-gray-400 font-mono text-xs">{user?._id || 'N/A'}</div>
+            <div className="mt-2 text-center flex flex-col items-center">
+              <div className="w-20 h-20 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center text-blue-600 dark:text-blue-400 text-3xl font-bold mb-4 shadow-inner">
+                {user?.name?.charAt(0).toUpperCase()}
+              </div>
+              <h4 className="text-xl font-bold text-gray-900 dark:text-white">{user?.name}</h4>
+              <p className="text-sm font-medium text-blue-600 dark:text-blue-400 mt-1 px-3 py-1 bg-blue-50 dark:bg-blue-900/30 rounded-full">{user?.role}</p>
+            </div>
+
+            <div className="mt-6 border-t border-gray-200 dark:border-gray-700 pt-4 space-y-4">
+              <div>
+                <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Email Address</label>
+                <div className="mt-1 text-sm text-gray-900 dark:text-white font-medium">{user?.email}</div>
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Account Created</label>
+                <div className="mt-1 text-sm text-gray-900 dark:text-white font-medium">
+                  {user?.createdAt ? new Date(user.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }) : 'N/A'}
                 </div>
               </div>
-              
-              <div className="mt-6">
-                <button
-                  type="button"
-                  onClick={() => setProfileOpen(false)}
-                  className="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:bg-gray-600 transition-colors"
-                >
-                  Close
-                </button>
+              <div>
+                <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Account ID</label>
+                <div className="mt-1 text-sm text-gray-500 dark:text-gray-400 font-mono text-xs">{user?._id || 'N/A'}</div>
               </div>
             </div>
+
+            <div className="mt-6">
+              <button
+                type="button"
+                onClick={() => setProfileOpen(false)}
+                className="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:bg-gray-600 transition-colors"
+              >
+                Close
+              </button>
+            </div>
           </div>
+        </div>
       )}
     </div>
   );
