@@ -1,4 +1,4 @@
-FROM node:18-alpine as build
+FROM node:22-alpine
 
 WORKDIR /app
 
@@ -8,7 +8,7 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-FROM nginx:alpine
+FROM nginx:stable-alpine
 COPY --from=build /app/dist /usr/share/nginx/html
 # Add nginx config for React router
 RUN echo 'server { listen 80; location / { root /usr/share/nginx/html; index index.html index.htm; try_files $uri $uri/ /index.html; } }' > /etc/nginx/conf.d/default.conf
