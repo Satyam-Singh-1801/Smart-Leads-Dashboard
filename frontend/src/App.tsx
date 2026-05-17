@@ -28,7 +28,7 @@ function App() {
         try {
           const { data } = await api.get('/auth/me');
           setAuth(data, token);
-        } catch (error) {
+        } catch {
           logout();
         }
       }

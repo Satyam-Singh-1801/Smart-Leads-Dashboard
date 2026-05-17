@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../services/api';
 import DashboardLayout from '../layouts/DashboardLayout';
 import { Trash2, Mail, Calendar, Loader2 } from 'lucide-react';
+import type { UserData } from '../types';
 
 const TeamManagement = () => {
   const queryClient = useQueryClient();
@@ -55,7 +56,7 @@ const TeamManagement = () => {
                     </td>
                   </tr>
                 ) : (
-                  team?.map((member: any) => (
+                  team?.map((member: UserData) => (
                     <tr key={member._id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">

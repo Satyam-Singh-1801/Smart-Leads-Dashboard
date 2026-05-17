@@ -5,6 +5,7 @@ import { useAuthStore } from '../store/useAuthStore';
 import { useDebounce } from '../hooks/useDebounce';
 import LeadModal from './LeadModal';
 import { Search, Plus, Download, Edit2, Trash2, Filter, Loader2 } from 'lucide-react';
+import type { LeadData } from '../types';
 
 export default function LeadsTable() {
   const [page, setPage] = useState(1);
@@ -17,7 +18,7 @@ export default function LeadsTable() {
   const isAdmin = user?.role === 'Admin';
   
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedLead, setSelectedLead] = useState<any>(null);
+  const [selectedLead, setSelectedLead] = useState<LeadData | null>(null);
 
   const debouncedSearch = useDebounce(searchTerm, 500);
   const queryClient = useQueryClient();
@@ -49,7 +50,7 @@ export default function LeadsTable() {
     const headers = ['Name', 'Email', 'Status', 'Source', 'Created At'];
     const csvContent = [
       headers.join(','),
-      ...data.leads.map((lead: any) => 
+      ...data.leads.map((lead: LeadData) => 
         `"${lead.name}","${lead.email}","${lead.status}","${lead.source}","${new Date(lead.createdAt).toLocaleDateString()}"`
       )
     ].join('\n');
@@ -64,7 +65,7 @@ export default function LeadsTable() {
     document.body.removeChild(link);
   };
 
-  const handleEdit = (lead: any) => {
+  const handleEdit = (lead: LeadData) => {
     setSelectedLead(lead);
     setIsModalOpen(true);
   };
@@ -74,7 +75,7 @@ export default function LeadsTable() {
     setIsModalOpen(true);
   };
 
-  const statusColors: any = {
+  const statusColors: Record<string, string> = {
     New: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
     Contacted: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
     Qualified: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
@@ -176,7 +177,7 @@ export default function LeadsTable() {
                 </td>
               </tr>
             ) : (
-              data?.leads?.map((lead: any) => (
+              data?.leads?.map((lead: LeadData) => (
                 <tr key={lead._id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-gray-900 dark:text-white">{lead.name}</div>

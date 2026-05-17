@@ -1,11 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import api from '../services/api';
 import { Users, Database, BarChart3 } from 'lucide-react';
+import type { LeadData } from '../types';
 
 interface Analytics {
   totalLeads: number;
   totalSalesmen: number;
-  recentLeads: any[];
+  recentLeads: LeadData[];
   leadsByStatus: { _id: string, count: number }[];
 }
 

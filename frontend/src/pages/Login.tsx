@@ -7,6 +7,7 @@ import api from '../services/api';
 import { useAuthStore } from '../store/useAuthStore';
 import { Mail, Lock, Loader2 } from 'lucide-react';
 import logo from '../assets/logo.png';
+import type { ApiError } from '../types';
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -32,7 +33,8 @@ const Login = () => {
       const response = await api.post('/auth/login', data);
       setAuth(response.data, response.data.token);
       navigate('/');
-    } catch (err: any) {
+    } catch (error: unknown) {
+      const err = error as ApiError;
       setError(err.response?.data?.message || 'Failed to login');
     } finally {
       setIsLoading(false);

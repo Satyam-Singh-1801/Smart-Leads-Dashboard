@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../services/api';
 import { X, Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import type { LeadData, ApiError } from '../types';
 
 interface LeadFormValues {
   name: string;
@@ -14,7 +15,7 @@ interface LeadFormValues {
 interface LeadModalProps {
   isOpen: boolean;
   onClose: () => void;
-  lead?: any;
+  lead?: LeadData | null;
 }
 
 export default function LeadModal({ isOpen, onClose, lead }: LeadModalProps) {
@@ -46,7 +47,8 @@ export default function LeadModal({ isOpen, onClose, lead }: LeadModalProps) {
         source: 'Website',
       });
     }
-    setApiError('');
+    const timeoutId = setTimeout(() => setApiError(''), 0);
+    return () => clearTimeout(timeoutId);
   }, [lead, reset, isOpen]);
 
   const mutation = useMutation({
@@ -62,11 +64,12 @@ export default function LeadModal({ isOpen, onClose, lead }: LeadModalProps) {
       reset();
       onClose();
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
       console.error('API Error:', error);
-      const data = error.response?.data;
+      const err = error as ApiError;
+      const data = err.response?.data;
       if (data?.errors) {
-        const errorMessages = data.errors.map((e: any) => `${e.path.join('.')}: ${e.message}`).join(', ');
+        const errorMessages = data.errors.map((e: { path: string[], message: string }) => `${e.path.join('.')}: ${e.message}`).join(', ');
         setApiError(errorMessages);
       } else {
         setApiError(data?.message || 'Something went wrong while saving the lead.');
